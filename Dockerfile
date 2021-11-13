@@ -31,6 +31,9 @@ COPY . /var/www/html
 
 WORKDIR /var/www/html
 
+USER 1001
+RUN chown -R 1001:0 /var/www/html
+
 RUN composer install --no-interaction --no-dev --prefer-dist
 
 RUN chmod -R 777 /var/www/html
