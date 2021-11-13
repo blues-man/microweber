@@ -23,6 +23,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg && \
 
 RUN docker-php-ext-install pdo_mysql zip dom curl mbstring intl
 
+RUN useradd -rm -d /home/php -s /bin/bash -g root -G sudo -u 1001 php
 
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
