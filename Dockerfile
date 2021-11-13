@@ -31,13 +31,19 @@ COPY . /var/www/html
 
 WORKDIR /var/www/html
 
-USER 1001
 RUN chown -R 1001:0 /var/www/html
 
+
+USER 1001
+
 RUN composer install --no-interaction --no-dev --prefer-dist
+
+USER root
 
 RUN chmod -R 777 /var/www/html
 RUN a2enmod rewrite
 RUN service apache2 restart
+
+USER 1001
 
 
