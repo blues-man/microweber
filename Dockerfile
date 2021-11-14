@@ -23,7 +23,6 @@ RUN docker-php-ext-configure gd --with-freetype --with-webp --with-jpeg && \
 
 RUN docker-php-ext-install pdo_mysql zip dom curl mbstring intl
 
-RUN useradd -rm -d /home/php -s /bin/bash -g root -G sudo -u 1001 php
 
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -32,19 +31,21 @@ COPY . /var/www/html
 
 WORKDIR /var/www/html
 
-RUN chown -R 1001:0 /var/www/html
 
 
-USER 1001
 
 RUN composer install --no-interaction --no-dev --prefer-dist
 
-USER root
 
 RUN chmod -R 777 /var/www/html
 RUN a2enmod rewrite
-RUN service apache2 restart
 
-USER 1001
+RUN sed -i "s/80/8080/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf 
+
+#RUN service apache2 restart
+
+EXPOSE 8080
+
+RUN  docker-php-entrypoint apache2-foreground
 
 
