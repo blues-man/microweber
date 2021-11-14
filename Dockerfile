@@ -42,10 +42,11 @@ RUN a2enmod rewrite
 
 RUN sed -i "s/80/8080/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf 
 
-#RUN service apache2 restart
 
 EXPOSE 8080
 
-RUN  docker-php-entrypoint apache2-foreground
+#RUN service apache2 restart
+
+#RUN  docker-php-entrypoint apache2-foreground
 
 
